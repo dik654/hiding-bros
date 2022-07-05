@@ -1,23 +1,39 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import { BrowserRouter, Routes } from "react-router-dom";
+import { ConnectWallet } from "./components/ConnectWallet";
+import Scripts from "./components/scripts";
+import Web3 from 'web3';
 
 function App() {
+  const [web3, setWeb3] = useState();
+  const [account, setAccount] = useState("");
+  useEffect(() => {
+    if (typeof window.ethereum !== "undefined") {
+      try {
+        const web = new Web3(window.ethereum);
+        setWeb3(web);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, []);
+
+  const connectWallet = async () => {
+    const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+    });
+      setAccount(accounts[0]);
+  };
+  connectWallet();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Scripts account={account}/>
+        <Routes>
+          {/*<Route path>*/}
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

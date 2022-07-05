@@ -1,0 +1,13 @@
+@font-face {
+    font-family: "font1";
+    src: url('../font/editundo.ttf');
+}
+
+@font-face {
+    font-family: "font2";
+    src: url('../font/neodgm.ttf');
+}
+body {
+    font-family: 'font1', 'font2';
+    font-size: 0px;
+}
